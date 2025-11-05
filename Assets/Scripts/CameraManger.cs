@@ -6,9 +6,12 @@ public class CameraManger : MonoBehaviour
     [SerializeField] GameObject firstPersonHead;
     [SerializeField] GameObject thirdPersonCamera;
     [SerializeField] PlayerController playerController;
+    [SerializeField] GameObject dialogueCamera;
+
 
     private bool isFirstPerson = true;
     private InputSystem_Actions playerInput;
+    private bool isInteracting = false;
 
     private void Awake()
     {
@@ -36,6 +39,8 @@ public class CameraManger : MonoBehaviour
     }
     void ToggleCamera()
     {
+        if (isInteracting) return;
+
         isFirstPerson = !isFirstPerson;
         //Toggle camera objects
         firstPersonHead.SetActive(isFirstPerson);
