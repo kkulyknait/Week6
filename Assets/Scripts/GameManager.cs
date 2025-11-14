@@ -12,9 +12,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject treasureIcon;
     [SerializeField] private TextMeshProUGUI questStatusText;
 
+    [SerializeField] private GameObject treasureMapPrefab;  //For spawning the map
+    [SerializeField] private GameObject treasureObject;  
+
     private InputSystem_Actions playerInput;
     private NPC npc;
     private bool isInteracting = false;
+    private int enemiesDefeated = 0;  //  Kill counter
 
     public enum QuestState { NotStarted, MapQuest, TreasureQuest, Complete }
     public QuestState currentQuestState;
@@ -52,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         npc = FindFirstObjectByType<NPC>();
         cameraManager = GetComponent<CameraManager>();
+        treasureObject.SetActive(false);  // Hide treasure at start
         currentQuestState = QuestState.NotStarted;
         UpdateQuestUI();
 
@@ -116,23 +121,51 @@ public class GameManager : MonoBehaviour
                 treasureIcon.SetActive(false);
                 break;
             case QuestState.MapQuest:
-                questStatusText.text = "Quest: Find the hidden map!";
+                // Quest to kill 1 enemy.  No Map Yet
+                questStatusText.text = "Quest: Defeat 1 Enemy";
                 mapIcon.SetActive(true);
                 treasureIcon.SetActive(false);
                 break;
             case QuestState.TreasureQuest:
+                //We've found the map.  Find the treasure
                 questStatusText.text = "Quest: Use the map to find the treasure!";
-                mapIcon.SetActive(false);
-                treasureIcon.SetActive(true);
+                mapIcon.SetActive(true);
+                treasureIcon.SetActive(false);
                 break;
             case QuestState.Complete:
-                questStatusText.text = "Quest Complete! You found the treasure!";
-                mapIcon.SetActive(false);
-                treasureIcon.SetActive(false);
+                questStatusText.text = "Quest Complete! You found the treasure!  Return to NPC!";
+                mapIcon.SetActive(true);
+                treasureIcon.SetActive(true);
                 break;
         }
     }
+    public void EnemyDefeated(Vector3 position)
+    {
+        //  Only count deaths if quest has started
+        if (currentQuestState != QuestState.MapQuest) return;
+        enemiesDefeated++;
+        if (enemiesDefeated >= 1)
+        {
+            //  Dropped after defeating enemy
+            questStatusText.text = "Objective: Find the Map!";
+            Instantiate(treasureMapPrefab, position + Vector3.up, Quaternion.identity);
+        }
+    }
 
+    public void FoundMap()
+    {
+        currentQuestState = QuestState.TreasureQuest;
+        UpdateQuestUI();
+        //  Activate Treasure
+        treasureObject.SetActive(true);
+    }
+
+    public void FoundTreasure()
+    {
+        currentQuestState = QuestState.Complete;
+        UpdateQuestUI();
+
+    }
     private void Update()
     {
         // This will check the "Interact" action every single frame.
