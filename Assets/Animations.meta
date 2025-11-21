@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animations.meta
 guid: 8714827b7a447474c8556faa9b2edd4e
+========
+guid: 71d3ecf21343f7a488e268a3632064eb
+>>>>>>>> e4f6d9d00afceaac2728b336c02fc8f428c7d400:Assets/Skybox Assets.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
