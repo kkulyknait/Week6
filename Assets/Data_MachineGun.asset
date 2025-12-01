@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a467f1ad85cc1143a7b9f289cc02e31, type: 3}
+  m_Name: Data_MachineGun
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Fast Blaster
+  fireRate: 0.1
+  projectileSpeed: 40
+  projectilePrefab: {fileID: 3562428807141953252, guid: 84a69505a485482439ad0f4d5c1bac6a, type: 3}
+  weaponColor: {r: 1, g: 0, b: 0, a: 0}
